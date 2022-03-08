@@ -40,5 +40,11 @@ public class Hotel {
 	public void setCustomerType(String customerType) {
 		this.customerType = customerType;
 	}
-	
+    @Override
+    public String toString() {
+    	return "\n Hotel Name : " + hotelName +
+    			"\n Customer Type : "+customerType+
+    			"\n Hotel WeekDayRates : "+weekDayRates +
+    			"\n Hotel WeekEndRates : "+weekEndRates ;
+    }
 }

@@ -13,24 +13,46 @@ public class HotelReservation {
 		hotelList.add(hotel);	
 	}
 
-	public int cheapestHotel(LocalDate startDate, LocalDate endDate) {
+	public String cheapestHotel(LocalDate startDate, LocalDate endDate) {
 		int totalRate = 0;
 		long noOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+		int cheapestRate = (int) Math.max(hotelList.get(0).getWeekEndRates() * noOfDaysBetween, (hotelList.get(0).getWeekDayRates() * noOfDaysBetween));
+		String ans = hotelList.get(0).getHotelName();
+
 
 		java.time.DayOfWeek dayOfWeek = startDate.getDayOfWeek();
 		System.out.println("Booking Day : "+dayOfWeek);
 		if(dayOfWeek == dayOfWeek.MONDAY || dayOfWeek == dayOfWeek.TUESDAY || dayOfWeek == dayOfWeek.WEDNESDAY || dayOfWeek == dayOfWeek.THURSDAY || dayOfWeek == dayOfWeek.FRIDAY) {
-			totalRate = (int) (hotelList.get(0).getWeekDayRates()*noOfDaysBetween);
-			System.out.println("Cheapest Hotel Name : "+hotelList.get(0).getHotelName());
-			System.out.println("Total Rate For WeekDays : "+totalRate);
+			for(int i =0; i<hotelList.size();i++) {
+				totalRate = (int) (hotelList.get(i).getWeekDayRates()*noOfDaysBetween);
+				if (totalRate < cheapestRate) {
+					cheapestRate = totalRate;
+					ans = hotelList.get(i).getHotelName();
+				}
+				System.out.println("Hotel Name : "+hotelList.get(i).getHotelName());
+				System.out.println("Total Rate For WeekDays : "+totalRate);
+			}
 
 		}
 		if(dayOfWeek == dayOfWeek.SATURDAY || dayOfWeek == dayOfWeek.SATURDAY) {
-			totalRate = (int) (hotelList.get(0).getWeekEndRates()*noOfDaysBetween);
-			System.out.println("Cheapest Hotel Name : "+hotelList.get(0).getHotelName());
-			System.out.println("Total Rate For WeekEnds : "+totalRate);
-
+			for(int i =0; i<hotelList.size();i++) {
+				totalRate = (int) (hotelList.get(i).getWeekEndRates()*noOfDaysBetween);
+				if (totalRate < cheapestRate) {
+					cheapestRate = totalRate;
+					ans = hotelList.get(i).getHotelName();
+				}
+				System.out.println("Hotel Name : "+hotelList.get(i).getHotelName());
+				System.out.println("Total Rate For WeekEnds : "+totalRate);
+			}
 		}
-		return totalRate;
+		return ans;
 	}
+
+	public void DisplayHotels() {
+		System.out.println("\nDifferent Hotel in List are : ");
+		for(int i=0;i<hotelList.size();i++) {
+			System.out.println(hotelList.get(i));
+		}
+	}
+
 }
